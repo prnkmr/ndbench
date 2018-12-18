@@ -38,7 +38,7 @@ import javax.inject.Inject;
  */
 
 @Singleton
-@NdBenchClientPlugin("GeodeCloudPlugin")
+//@NdBenchClientPlugin("GeodeCloudPlugin")
 public class GeodeCloudPlugin implements NdBenchClient{
 
   private final static Logger logger = LoggerFactory.getLogger(GeodeCloudPlugin.class);

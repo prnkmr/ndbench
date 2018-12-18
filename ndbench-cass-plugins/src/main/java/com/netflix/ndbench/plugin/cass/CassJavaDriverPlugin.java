@@ -34,7 +34,7 @@ import java.util.List;
  * @author vchella
  */
 @Singleton
-@NdBenchClientPlugin("CassJavaDriverPlugin")
+//@NdBenchClientPlugin("CassJavaDriverPlugin")
 public class CassJavaDriverPlugin implements NdBenchClient{
     private static final Logger Logger = LoggerFactory.getLogger(CassJavaDriverPlugin.class);
     private final PropertyFactory propertyFactory;

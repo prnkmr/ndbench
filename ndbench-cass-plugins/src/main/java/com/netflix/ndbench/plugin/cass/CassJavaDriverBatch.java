@@ -17,7 +17,7 @@ import java.util.Random;
  * @author vchella
  */
 @Singleton
-@NdBenchClientPlugin("CassJavaDriverBatch")
+//@NdBenchClientPlugin("CassJavaDriverBatch")
 public class CassJavaDriverBatch extends CJavaDriverBasePlugin {
 
     //Settings

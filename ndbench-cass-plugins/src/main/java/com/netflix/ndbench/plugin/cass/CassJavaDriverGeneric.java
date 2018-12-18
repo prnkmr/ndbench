@@ -12,7 +12,7 @@ import java.util.List;
 
 
 @Singleton
-@NdBenchClientPlugin("CassJavaDriverGeneric")
+//@NdBenchClientPlugin("CassJavaDriverGeneric")
 @SuppressWarnings("unused")
 public class CassJavaDriverGeneric extends CJavaDriverBasePlugin {
 

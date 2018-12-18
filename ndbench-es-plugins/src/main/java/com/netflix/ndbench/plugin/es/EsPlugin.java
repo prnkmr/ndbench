@@ -38,7 +38,7 @@ import java.util.Map;
  * @author vchella
  */
 @Singleton
-@NdBenchClientPlugin("ElasticSearchPlugin")
+//@NdBenchClientPlugin("ElasticSearchPlugin")
 public class EsPlugin implements NdBenchClient {
 
     private static final Logger logger = LoggerFactory.getLogger(EsPlugin.class);

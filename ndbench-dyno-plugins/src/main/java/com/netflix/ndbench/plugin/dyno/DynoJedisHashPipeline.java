@@ -36,78 +36,79 @@ import java.util.concurrent.atomic.AtomicReference;
  * @author ipapapa
  *
  */
-@Singleton
-@NdBenchClientPlugin("DynoHashPipeline")
-public class DynoJedisHashPipeline implements NdBenchClient {
-
-    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(DynoJedisHashPipeline.class);
-
-    private static final String HM_KEY_PREFIX = "HM__";
-
-    private static final String ClusterName = "dynomite_redis";
-
-    private final AtomicReference<DynoJedisClient> jedisClient = new AtomicReference<DynoJedisClient>(null);
-
-    private DataGenerator dataGenerator;
-
-    @Override
-    public void init(DataGenerator dataGenerator) throws Exception {
-        this.dataGenerator = dataGenerator;
-        if (jedisClient.get() != null) {
-            return;
-        }
-
-        logger.info("Initing dyno jedis client");
-
-        logger.info("\nDynomite Cluster: " + ClusterName);
-
-        HostSupplier hSupplier = new HostSupplier() {
-
-            @Override
-            public Collection<Host> getHosts() {
-
-                List<Host> hosts = new ArrayList<Host>();
-                hosts.add(new Host("localhost", 8102, "local-dc", Host.Status.Up));
-
-                return hosts;
-            }
-
-        };
-
-        DynoJedisClient jClient = new DynoJedisClient.Builder().withApplicationName(ClusterName)
-                .withDynomiteClusterName(ClusterName).withHostSupplier(hSupplier).build();
-
-        jedisClient.set(jClient);
-    }
-
-    @Override
-    public String readSingle(String key) throws Exception {
-        DynoJedisUtils jedisUtils = new DynoJedisUtils(jedisClient);
-        return jedisUtils.pipelineReadHGETALL(key, HM_KEY_PREFIX);
-    }
-
-    @Override
-    public String writeSingle(String key) throws Exception {
-        DynoJedisUtils jedisUtils = new DynoJedisUtils(jedisClient);
-        return jedisUtils.pipelineWriteHMSET(key, dataGenerator, HM_KEY_PREFIX);
-    }
-
-    @Override
-    public void shutdown() throws Exception {
-        if (jedisClient.get() != null) {
-            jedisClient.get().stopClient();
-            jedisClient.set(null);
-        }
-    }
-
-    @Override
-    public String getConnectionInfo() throws Exception {
-        return String.format("Cluster Name - %s", ClusterName);
-    }
-
-    @Override
-    public String runWorkFlow() throws Exception {
-        return null;
-    }
-
-}
+public class DynoJedisHashPipeline{}
+//@Singleton
+//@NdBenchClientPlugin("DynoHashPipeline")
+//public class DynoJedisHashPipeline implements NdBenchClient {
+//
+//    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(DynoJedisHashPipeline.class);
+//
+//    private static final String HM_KEY_PREFIX = "HM__";
+//
+//    private static final String ClusterName = "dynomite_redis";
+//
+//    private final AtomicReference<DynoJedisClient> jedisClient = new AtomicReference<DynoJedisClient>(null);
+//
+//    private DataGenerator dataGenerator;
+//
+//    @Override
+//    public void init(DataGenerator dataGenerator) throws Exception {
+//        this.dataGenerator = dataGenerator;
+//        if (jedisClient.get() != null) {
+//            return;
+//        }
+//
+//        logger.info("Initing dyno jedis client");
+//
+//        logger.info("\nDynomite Cluster: " + ClusterName);
+//
+//        HostSupplier hSupplier = new HostSupplier() {
+//
+//            @Override
+//            public Collection<Host> getHosts() {
+//
+//                List<Host> hosts = new ArrayList<Host>();
+//                hosts.add(new Host("localhost", 8102, "local-dc", Host.Status.Up));
+//
+//                return hosts;
+//            }
+//
+//        };
+//
+//        DynoJedisClient jClient = new DynoJedisClient.Builder().withApplicationName(ClusterName)
+//                .withDynomiteClusterName(ClusterName).withHostSupplier(hSupplier).build();
+//
+//        jedisClient.set(jClient);
+//    }
+//
+//    @Override
+//    public String readSingle(String key) throws Exception {
+//        DynoJedisUtils jedisUtils = new DynoJedisUtils(jedisClient);
+//        return jedisUtils.pipelineReadHGETALL(key, HM_KEY_PREFIX);
+//    }
+//
+//    @Override
+//    public String writeSingle(String key) throws Exception {
+//        DynoJedisUtils jedisUtils = new DynoJedisUtils(jedisClient);
+//        return jedisUtils.pipelineWriteHMSET(key, dataGenerator, HM_KEY_PREFIX);
+//    }
+//
+//    @Override
+//    public void shutdown() throws Exception {
+//        if (jedisClient.get() != null) {
+//            jedisClient.get().stopClient();
+//            jedisClient.set(null);
+//        }
+//    }
+//
+//    @Override
+//    public String getConnectionInfo() throws Exception {
+//        return String.format("Cluster Name - %s", ClusterName);
+//    }
+//
+//    @Override
+//    public String runWorkFlow() throws Exception {
+//        return null;
+//    }
+//
+//}
