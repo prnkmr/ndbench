@@ -53,5 +53,6 @@ public final class NdBenchConstants {
     public static final String DISCOVERY_ENV="DISCOVERY_ENV";
     public static final String DISCOVERY_ENV_CF="CF";
     public static final String DISCOVERY_ENV_AWS="AWS";
+    public static final String DISCOVERY_ENV_CONFIG="CLUSTER_CONFIG";
 
 }
