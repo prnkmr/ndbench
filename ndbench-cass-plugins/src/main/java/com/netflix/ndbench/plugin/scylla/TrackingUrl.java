@@ -44,9 +44,9 @@ import java.util.UUID;
  *
  */
 @Singleton
-@NdBenchClientPlugin("TrackingCustomParams")
-public class TrackingCustomParams implements NdBenchClient{
-    private static final Logger Logger = LoggerFactory.getLogger(TrackingCustomParams.class);
+@NdBenchClientPlugin("TrackingUrl")
+public class TrackingUrl implements NdBenchClient{
+    private static final Logger Logger = LoggerFactory.getLogger(TrackingUrl.class);
 
     private Cluster cluster;
     private Session session;
@@ -54,7 +54,7 @@ public class TrackingCustomParams implements NdBenchClient{
     private DataGenerator dataGenerator;
     protected PropertyFactory propertyFactory;
 
-    private String ClusterName = "email", ClusterContactPoint ="127.0.0.1", KeyspaceName ="email", TableName ="tracking_custom_params";
+    private String ClusterName = "email", ClusterContactPoint ="127.0.0.1", KeyspaceName ="email", TableName ="tracking_urls";
     //private String ClusterName = "Test Cluster", ClusterContactPoint ="172.28.198.16", KeyspaceName ="customer", TableName ="external";
         
     private ConsistencyLevel WriteConsistencyLevel=ConsistencyLevel.LOCAL_ONE, ReadConsistencyLevel=ConsistencyLevel.LOCAL_ONE;
@@ -73,7 +73,7 @@ public class TrackingCustomParams implements NdBenchClient{
      */
     
     @Inject
-    public TrackingCustomParams(PropertyFactory propertyFactory) {
+    public TrackingUrl(PropertyFactory propertyFactory) {
         this.propertyFactory = propertyFactory;
     }
     
@@ -94,10 +94,10 @@ public class TrackingCustomParams implements NdBenchClient{
         upsertKeyspace(this.session);
         upsertCF(this.session);
 
-        writePstmt = session.prepare("INSERT INTO "+ TableName +" (id , app_id , from_addr , to_addr , params , urls  ) VALUES (?, ?, ?, ?, ?, ?)");
+        writePstmt = session.prepare("INSERT INTO "+ TableName +" (id , url  ) VALUES (?, ?)");
         readPstmt = session.prepare("SELECT * From "+ TableName +" Where id = ?");
 
-        Logger.info("Initialized TrackingCustomParams");
+        Logger.info("Initialized TrackingUrl");
     }
 
     /**
@@ -139,12 +139,7 @@ public class TrackingCustomParams implements NdBenchClient{
     public String writeSingle(String key) throws Exception {
         BoundStatement bStmt = writePstmt.bind();
         bStmt.setString("id", key);
-        bStmt.setVarint("app_id", new BigInteger(dataGenerator.getRandomIntegerValue().toString()));
-        bStmt.setString("from_addr"	, this.dataGenerator.getRandomString());
-        bStmt.setString("params"	, this.dataGenerator.getRandomString());
-        bStmt.setString("to_addr"	, this.dataGenerator.getRandomString());
-        bStmt.setString("from_addr"	, this.dataGenerator.getRandomString());
-        bStmt.setString("urls", this.dataGenerator.getRandomString()) ;
+        bStmt.setString("url", this.dataGenerator.getRandomString()) ;
         bStmt.setConsistencyLevel(this.WriteConsistencyLevel);
 
         session.execute(bStmt);
@@ -156,7 +151,7 @@ public class TrackingCustomParams implements NdBenchClient{
      */
     @Override
     public void shutdown() throws Exception {
-        Logger.info("Shutting down TrackingCustomParams");
+        Logger.info("Shutting down TrackingUrl");
         cluster.close();
     }
 
@@ -185,7 +180,7 @@ public class TrackingCustomParams implements NdBenchClient{
     }
     
     void upsertCF(Session session) {
-        session.execute("CREATE TABLE IF NOT EXISTS "+ TableName +" (id text primary key, app_id varint, from_addr text, to_addr text, params text, urls text)");
+        session.execute("CREATE TABLE IF NOT EXISTS "+ TableName +" (id text primary key, url text)");
         
     }
 }
