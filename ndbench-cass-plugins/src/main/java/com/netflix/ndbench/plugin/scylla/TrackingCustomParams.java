@@ -185,7 +185,7 @@ public class TrackingCustomParams implements NdBenchClient{
     }
     
     void upsertCF(Session session) {
-        session.execute("CREATE TABLE IF NOT EXISTS "+ TableName +" (id uuid primary key, app_id varint, from_addr text, to_addr text, params text, urls text)");
+        session.execute("CREATE TABLE IF NOT EXISTS "+ TableName +" (id text primary key, app_id varint, from_addr text, to_addr text, params text, urls text)");
         
     }
 }
