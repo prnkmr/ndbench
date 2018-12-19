@@ -57,7 +57,7 @@ public class TrackingUrl implements NdBenchClient{
     private String ClusterName = "email", ClusterContactPoint ="127.0.0.1", KeyspaceName ="email", TableName ="tracking_urls";
     //private String ClusterName = "Test Cluster", ClusterContactPoint ="172.28.198.16", KeyspaceName ="customer", TableName ="external";
         
-    private ConsistencyLevel WriteConsistencyLevel=ConsistencyLevel.LOCAL_ONE, ReadConsistencyLevel=ConsistencyLevel.LOCAL_ONE;
+    private ConsistencyLevel WriteConsistencyLevel=ConsistencyLevel.TWO, ReadConsistencyLevel=ConsistencyLevel.LOCAL_ONE;
 
     private PreparedStatement readPstmt;
     private PreparedStatement writePstmt;
