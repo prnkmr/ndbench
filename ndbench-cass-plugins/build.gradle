@@ -7,6 +7,8 @@ dependencies {
     compile group: 'com.netflix.astyanax', name: 'astyanax-core', version: 'latest.release'
     compile group: 'com.netflix.astyanax', name: 'astyanax-thrift', version: 'latest.release'
     compile group: 'com.netflix.astyanax', name: 'astyanax-cassandra', version: 'latest.release'
-
+    
+        // mail
+	compile group: 'javax.mail', name: 'mail', version: '1.4.1'
 
 }
