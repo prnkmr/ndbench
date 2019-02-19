@@ -44,9 +44,9 @@ import java.util.UUID;
  *
  */
 @Singleton
-@NdBenchClientPlugin("TrackingUrl")
-public class TrackingUrl implements NdBenchClient{
-    private static final Logger Logger = LoggerFactory.getLogger(TrackingUrl.class);
+@NdBenchClientPlugin("Keyvalue")
+public class Keyvalue implements NdBenchClient{
+    private static final Logger Logger = LoggerFactory.getLogger(Keyvalue.class);
 
     private Cluster cluster;
     private Session session;
@@ -73,7 +73,7 @@ public class TrackingUrl implements NdBenchClient{
      */
     
     @Inject
-    public TrackingUrl(PropertyFactory propertyFactory) {
+    public Keyvalue(PropertyFactory propertyFactory) {
         this.propertyFactory = propertyFactory;
     }
     
