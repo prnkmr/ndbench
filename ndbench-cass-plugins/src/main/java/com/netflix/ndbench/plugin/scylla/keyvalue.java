@@ -54,7 +54,7 @@ public class TrackingUrl implements NdBenchClient{
     private DataGenerator dataGenerator;
     protected PropertyFactory propertyFactory;
 
-    private String ClusterName = "email", ClusterContactPoint ="127.0.0.1", KeyspaceName ="email", TableName ="tracking_urls";
+    private String ClusterName = "email", ClusterContactPoint ="127.0.0.1", KeyspaceName ="email", TableName ="keyvalue";
     //private String ClusterName = "Test Cluster", ClusterContactPoint ="172.28.198.16", KeyspaceName ="customer", TableName ="external";
         
     private ConsistencyLevel WriteConsistencyLevel=ConsistencyLevel.TWO, ReadConsistencyLevel=ConsistencyLevel.LOCAL_ONE;
@@ -94,7 +94,7 @@ public class TrackingUrl implements NdBenchClient{
         upsertKeyspace(this.session);
         upsertCF(this.session);
 
-        writePstmt = session.prepare("INSERT INTO "+ TableName +" (id , url  ) VALUES (?, ?)");
+        writePstmt = session.prepare("INSERT INTO "+ TableName +" (id , value) VALUES (?, ?)");
         readPstmt = session.prepare("SELECT * From "+ TableName +" Where id = ?");
 
         Logger.info("Initialized TrackingUrl");
@@ -139,7 +139,7 @@ public class TrackingUrl implements NdBenchClient{
     public String writeSingle(String key) throws Exception {
         BoundStatement bStmt = writePstmt.bind();
         bStmt.setString("id", key);
-        bStmt.setString("url", this.dataGenerator.getRandomString()) ;
+        bStmt.setString("value", this.dataGenerator.getRandomString()) ;
         bStmt.setConsistencyLevel(this.WriteConsistencyLevel);
 
         session.execute(bStmt);
@@ -180,7 +180,7 @@ public class TrackingUrl implements NdBenchClient{
     }
     
     void upsertCF(Session session) {
-        session.execute("CREATE TABLE IF NOT EXISTS "+ TableName +" (id text primary key, url text)");
+        session.execute("CREATE TABLE IF NOT EXISTS "+ TableName +" (id text primary key, value text)");
         
     }
 }
